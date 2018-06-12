@@ -12,19 +12,11 @@ def get_sequence(reference_fasta, coordinates, strand):
     #['chr10:13489241-13489394', 'AAAATGTAAATGCGTTTTATTTACCTGTTGGTGGTAGAGCAATGCCGTCCAGTCTTTCATCACTGTCCGCGATCTCTGCTGGTTACAAACATAAGACACAAATCTCATTAGTTCCAGGGAGCACATTCATTTTACAGAAAATAGTGATGTAAT']
 
 def substitute_variant(sequence_reference, var_loc, var_ref, var_alt):
-    ref_bounds = sequence_reference[0] 
-    ref_lower = int(ref_bounds.split(':')[1].split('-')[0])+1
-    seq = sequence_reference[1]
-    ref_var_len = len(var_ref)
-    rel_pos = int(var_loc) - ref_lower
-    ref = seq[rel_pos:rel_pos + ref_var_len]
-    new_seq = list(seq)
-    if len(var_ref) ==1:
-        new_seq[rel_pos] = var_alt
-    else:
-        for i in range(rel_pos, rel_pos + ref_var_len):
-            new_seq.pop(rel_pos)
-        new_seq.insert(rel_pos, var_alt)
+    ref_bounds, seq = sequence_reference
+    _, lower = ref_bounds.split(':')
+    ref_lower = int(next(iter(lower.split('-'))))
+    rel_pos = int(var_loc) - ref_lower - 1
+    new_seq = seq[:rel_pos] + var_alt + seq[rel_pos + len(var_ref):]
     return ''.join(new_seq)
 
 def rev_comp(string):
