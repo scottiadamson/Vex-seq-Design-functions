@@ -24,11 +24,11 @@ def rev_comp(string):
     new_seq = []
     for item in list(string):
         new_seq.append(comp(item))
-    return ''.join(string)[::-1]
+    return ''.join(new_seq)[::-1]
 
 def comp(string):
     comp = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A', 'U': 'A', 'a' : 't', 'c': 'g', 'g': 'c', 't' : 'a', 'u': 'a','N': 'N', 'n':'n'}
     new_seq = []
     for item in list(string):
         new_seq.append(comp(item))
-    return ''.join(string)
+    return ''.join(new_seq)
